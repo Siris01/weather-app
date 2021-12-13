@@ -3,14 +3,16 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-//import org.json.*;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 import java.util.Scanner;
 
 class ClientSecrets {
     static String apiKey = "9adfefb504af4f3d8ad182141211212";
 }
 class RequestBuilder {
-    public void getWeatherData(String location) throws IOException {
+    public void getWeatherData(String location) throws IOException, JSONException {
         URL url = new URL("http://api.weatherapi.com/v1/current.json?key=" + ClientSecrets.apiKey + "&q=" + location + "&aqi=no");
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod("GET");
@@ -31,18 +33,16 @@ class RequestBuilder {
         this.prettify(content);
     }
 
-    public void prettify(StringBuffer rawWeatherData) {
-        /*
+    public void prettify(StringBuffer rawWeatherData) throws JSONException {
+        
         JSONObject weatherObj = new JSONObject(rawWeatherData.toString());
         JSONObject loc = weatherObj.getJSONObject("location");
         JSONObject temp = weatherObj.getJSONObject("current");
+        JSONObject cond = temp.getJSONObject("condition");
 
         System.out.println("Location: " + loc.getString("name") + ", " + loc.getString("country"));
-        System.out.println("Weather: " + temp.getFloat("temp_c") + "C / " + temp.getFloat("temp_f") + "F");
-        */
-
-        System.out.println(rawWeatherData);
-        
+        System.out.println("Weather: " + temp.getDouble("temp_c") + "C / " + temp.getDouble("temp_f") + "F " + cond.getString("text"));
+        System.out.println("Time: " + loc.getString("localtime"));
     }
 }
 
