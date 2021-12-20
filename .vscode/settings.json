@@ -1,7 +1,6 @@
 {
     "java.project.referencedLibraries": [
         "json-20210307.jar",
-        "json-simple-1.1.1.jar",
-        "org.json.jar"
+        "json-simple-1.1.1.jar"
     ]
 }
